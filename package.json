@@ -1,0 +1,22 @@
+{
+  "name": "nito-web-api",
+  "type": "module",
+  "scripts": {
+    "build": "bun run build.ts",
+    "zip": "cd dist && zip -r ../lambda.zip .",
+    "update": "aws lambda update-function-code --zip-file fileb://lambda.zip --function-name nito-web-api",
+    "deploy": "run-s build zip update",
+    "dev": "bun run --hot src/index.ts"
+  },
+  "devDependencies": {
+    "@sprout2000/esbuild-copy-plugin": "^1.1.19",
+    "@types/node": "^24.10.1",
+    "esbuild": "^0.27.0",
+    "npm-run-all2": "^8.0.4"
+  },
+  "dependencies": {
+    "@resvg/resvg-wasm": "^2.6.2",
+    "hono": "^4.10.6",
+    "satori": "^0.18.3"
+  }
+}
