@@ -16,7 +16,7 @@ console.log("bg image loading...");
 const bgImgBase64 = await getBase64Image(
   process.env.NODE_ENV == "production"
     ? IMG_URL_OGP_BG
-    : "assets/" + IMG_URL_OGP_BG
+    : "public/" + IMG_URL_OGP_BG
 );
 console.log("bg image loaded");
 

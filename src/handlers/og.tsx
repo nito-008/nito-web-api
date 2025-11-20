@@ -3,7 +3,7 @@ import type { Context } from "hono";
 import { OgImage } from "./OgImage";
 import { FONTS } from "../consts";
 import satori from "satori";
-import { Resvg } from "@resvg/resvg-wasm";
+import { initWasm, Resvg } from "@resvg/resvg-wasm";
 import { Buffer } from "buffer";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -18,11 +18,27 @@ let isWasmInitialized = false;
 
 export const getOgImageHandler = async (c: Context) => {
   try {
+    if (!isWasmInitialized) {
+      console.log("wasm initializing...");
+
+      const wasmPath = path.resolve(
+        process.cwd(),
+        process.env.NODE_ENV == "production"
+          ? "index_bg.wasm"
+          : "node_modules/@resvg/resvg-wasm/index_bg.wasm"
+      );
+      const wasmBuffer = await fs.readFile(wasmPath);
+
+      await initWasm(wasmBuffer);
+      isWasmInitialized = true;
+      console.log("wasm initialized");
+    }
+
     console.log("font loading...");
     const fontDataPromise = FONTS.map(async (font) => {
       const fontPath = path.join(
         process.cwd(),
-        process.env.NODE_ENV == "production" ? font.file : "assets/" + font.file
+        process.env.NODE_ENV == "production" ? font.file : "public/" + font.file
       );
 
       return {
