@@ -37,7 +37,6 @@ export const OgImage: FC<OgImageProps> = ({ title }: OgImageProps) => {
     >
       <div
         style={{
-          textAlign: "center",
           fontSize: 60,
           fontFamily: "Zen Maru Gothic",
           background: "white",
