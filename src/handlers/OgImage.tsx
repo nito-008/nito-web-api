@@ -16,7 +16,7 @@ console.log("bg image loading...");
 const bgImgBase64 = await getBase64Image(
   process.env.NODE_ENV == "production"
     ? IMG_URL_OGP_BG
-    : "public/" + IMG_URL_OGP_BG
+    : "public/" + IMG_URL_OGP_BG,
 );
 console.log("bg image loaded");
 
@@ -44,6 +44,8 @@ export const OgImage: FC<OgImageProps> = ({ title }: OgImageProps) => {
           color: "black",
           height: "100%",
           padding: "48px 72px",
+          wordBreak: "keep-all",
+          overflowWrap: "anywhere",
         }}
       >
         {title}

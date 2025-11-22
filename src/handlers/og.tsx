@@ -25,7 +25,7 @@ export const getOgImageHandler = async (c: Context) => {
         process.cwd(),
         process.env.NODE_ENV == "production"
           ? "index_bg.wasm"
-          : "node_modules/@resvg/resvg-wasm/index_bg.wasm"
+          : "node_modules/@resvg/resvg-wasm/index_bg.wasm",
       );
       const wasmBuffer = await fs.readFile(wasmPath);
 
@@ -38,7 +38,9 @@ export const getOgImageHandler = async (c: Context) => {
     const fontDataPromise = FONTS.map(async (font) => {
       const fontPath = path.join(
         process.cwd(),
-        process.env.NODE_ENV == "production" ? font.file : "public/" + font.file
+        process.env.NODE_ENV == "production"
+          ? font.file
+          : "public/" + font.file,
       );
 
       return {
