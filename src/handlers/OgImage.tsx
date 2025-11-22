@@ -1,6 +1,7 @@
 import type { FC } from "hono/jsx";
 import fs from "node:fs/promises";
 import { IMG_URL_OGP_BG } from "../consts";
+import { loadDefaultJapaneseParser } from "budoux";
 
 interface OgImageProps {
   title?: string;
@@ -19,6 +20,8 @@ const bgImgBase64 = await getBase64Image(
     : "public/" + IMG_URL_OGP_BG,
 );
 console.log("bg image loaded");
+
+const parser = loadDefaultJapaneseParser();
 
 export const OgImage: FC<OgImageProps> = ({ title }: OgImageProps) => {
   return (
@@ -42,13 +45,15 @@ export const OgImage: FC<OgImageProps> = ({ title }: OgImageProps) => {
           background: "white",
           borderRadius: 24,
           color: "black",
-          height: "100%",
           padding: "48px 72px",
-          wordBreak: "keep-all",
-          overflowWrap: "anywhere",
+          display: "flex",
+          flexWrap: "wrap",
+          flex: "1",
         }}
       >
-        {title}
+        {parser.parse(title ?? "").map((chunk) => (
+          <span>{chunk}</span>
+        ))}
       </div>
       <div
         style={{
